@@ -1,4 +1,6 @@
+using crudapi.Data;
 using crudapi.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -8,11 +10,11 @@ public class UserService
 {
     private readonly IMongoCollection<User> _users;
 
-    public UserService(IConfiguration config)
+    public UserService(IOptions<UsersDatabaseSettings> options)
     {
-        var client = new MongoClient(config.GetConnectionString("UsersDB"));
-        var database = client.GetDatabase("UsersDB");
-        _users = database.GetCollection<User>("Users");
+        var mongoClient = new MongoClient(options.Value.ConnectionString);
+        var database = mongoClient.GetDatabase(options.Value.DatabaseName);
+        _users = database.GetCollection<User>(options.Value.CollectionName);
     }
 
     // Gets all users
@@ -40,7 +42,6 @@ public class UserService
         return u;
         
     }
-
 
     public async Task Delete(string id)
     {
