@@ -1,5 +1,12 @@
 # C#.NET CRUD API using Docker
 
+`
+docker-compose build
+`\
+`
+docker-compose up
+`
+
 #### You can Create, Read, Update and Delete basic user entity using following JSON structure:
 
 ```JSON
