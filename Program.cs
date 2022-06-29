@@ -32,7 +32,9 @@ void RegisterServices(IServiceCollection services)
 }
 
 void ConfigureApp(WebApplication app)
-{
+{ 
+    app.UseCors(b => b.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowCredentials().AllowAnyMethod());
+    
     var port = Environment.GetEnvironmentVariable("PORT");
     if (!string.IsNullOrWhiteSpace(port))
     {
